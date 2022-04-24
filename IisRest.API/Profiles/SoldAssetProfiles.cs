@@ -8,8 +8,8 @@ namespace IisRest.API.Profiles
         public SoldAssetProfiles()
         {
             // source->target
-            CreateMap<Contracts.Entities.SoldAsset, SoldAssetReadDto>();
-            CreateMap<SoldAssetCreateDto, Contracts.Entities.SoldAsset>();
+            CreateMap<SoldAsset, SoldAssetReadDto>();
+            CreateMap<SoldAssetCreateDto, SoldAsset>();
         }
     }
 }

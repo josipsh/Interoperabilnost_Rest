@@ -1,5 +1,6 @@
 using AutoMapper;
 using IisRest.Contracts.Dtos.Price;
+using IisRest.Contracts.Entities;
 
 namespace IisRest.API.Profiles
 {
@@ -8,8 +9,8 @@ namespace IisRest.API.Profiles
         public PriceProfile()
         {
             // source->target
-            CreateMap<Contracts.Entities.Price, PriceReadDto>();
-            CreateMap<PriceCreateDto, Contracts.Entities.Price>();
+            CreateMap<Price, PriceReadDto>();
+            CreateMap<PriceCreateDto, Price>();
         }
     }
 }

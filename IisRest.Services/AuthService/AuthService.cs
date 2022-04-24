@@ -10,9 +10,9 @@ namespace IisRest.Services.AuthService
     public class AuthService : IAuthService
     {
         private readonly ITokenGenerator _tokenGenerator;
-        private readonly UserManager<Profile> _userManager;
+        private readonly UserManager<UserProfile> _userManager;
 
-        public AuthService(UserManager<Profile> userManager, ITokenGenerator tokenGenerator)
+        public AuthService(UserManager<UserProfile> userManager, ITokenGenerator tokenGenerator)
         {
             _tokenGenerator = tokenGenerator;
             _userManager = userManager;
@@ -20,7 +20,7 @@ namespace IisRest.Services.AuthService
 
         public async Task<BasicLoginResponse> LogInAsync(BasicLoginRequest user)
         {
-            Profile userDb = await FetchUserDataFromDB(user.Email, new Exception("Invalid Email Or Password"));
+            UserProfile userDb = await FetchUserDataFromDB(user.Email, new Exception("Invalid Email Or Password"));
 
             bool isPaswordValid = await _userManager.CheckPasswordAsync(userDb, user.Password);
 
@@ -38,9 +38,9 @@ namespace IisRest.Services.AuthService
             };
         }
 
-        private async Task<Profile> FetchUserDataFromDB(string email, Exception exception)
+        private async Task<UserProfile> FetchUserDataFromDB(string email, Exception exception)
         {
-            Profile? userDb = await _userManager.FindByEmailAsync(email);
+            UserProfile? userDb = await _userManager.FindByEmailAsync(email);
 
             if (userDb == null)
             {
@@ -59,7 +59,7 @@ namespace IisRest.Services.AuthService
                 throw new Exception("Password must be same");
             }
 
-            Profile user = userData.ToModel();
+            UserProfile user = userData.ToModel();
 
             IdentityResult result = await _userManager.CreateAsync(user, userData.Password);
 
@@ -91,7 +91,7 @@ namespace IisRest.Services.AuthService
             return registeredUser;
         }
 
-        private async Task<TokenHolder> GenerateToken(Profile user)
+        private async Task<TokenHolder> GenerateToken(UserProfile user)
         {
             IList<Claim> claims = await _userManager.GetClaimsAsync(user);
 
@@ -100,7 +100,7 @@ namespace IisRest.Services.AuthService
 
         private async Task IfUserAlreadyExistThrowException(string email)
         {
-            Profile? existingUser = await _userManager.FindByEmailAsync(email);
+            UserProfile? existingUser = await _userManager.FindByEmailAsync(email);
 
             if (existingUser != null)
             {

@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IisRest.Data.Db.MsSql.Configuration
 {
-    public class ApplicationDbContext : IdentityDbContext<Profile, IdentityRole<int>, int>
+    public class ApplicationDbContext : IdentityDbContext<UserProfile, IdentityRole<int>, int>
     {
-        public DbSet<Profile> Profiles { get; set; } = default!;
+        public DbSet<UserProfile> Profiles { get; set; } = default!;
         public DbSet<Price> Prices { get; set; } = default!;
         public DbSet<BoughtAsset> BoughtAssets { get; set; } = default!;
         public DbSet<SoldAsset> SoldAssets { get; set; } = default!;

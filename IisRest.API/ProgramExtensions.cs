@@ -50,7 +50,7 @@ namespace IisRest.API
 
         internal static void ConfigureIdentityServer(this IServiceCollection services, ConfigurationManager configuration)
         {
-            services.AddIdentity<Profile, IdentityRole<int>>(opt =>
+            services.AddIdentity<UserProfile, IdentityRole<int>>(opt =>
             {
                 opt.Password.RequiredLength = 4;
                 opt.Password.RequireDigit = false;

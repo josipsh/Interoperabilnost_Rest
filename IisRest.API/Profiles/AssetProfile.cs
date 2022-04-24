@@ -1,5 +1,6 @@
 using AutoMapper;
 using IisRest.Contracts.Dtos.Asset;
+using IisRest.Contracts.Entities;
 
 namespace IisRest.API.Profiles
 {
@@ -8,8 +9,8 @@ namespace IisRest.API.Profiles
         public AssetProfile()
         {
             // source->target
-            CreateMap<Contracts.Entities.Asset, AssetReadDto>();
-            CreateMap<AssetCreateDto, Contracts.Entities.Asset>();
+            CreateMap<Asset, AssetReadDto>();
+            CreateMap<AssetCreateDto, Asset>();
         }
     }
 }

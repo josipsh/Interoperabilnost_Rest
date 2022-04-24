@@ -13,9 +13,9 @@ namespace IisRest.Contracts.Dtos.Auth
         public string Password { get; set; } = default!;
         public string PasswordConfirm { get; set; } = default!;
 
-        public Profile ToModel()
+        public UserProfile ToModel()
         {
-            return new Profile()
+            return new UserProfile()
             {
                 FirstName = FirstName,
                 MiddleName = MiddleName,

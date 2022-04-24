@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace IisRest.Contracts.Entities
 {
-    public class Profile : IdentityUser<int>, IBaseEntity
+    public class UserProfile : IdentityUser<int>, IBaseEntity
     {
         public override int Id { get; set; } = default!;
         public string FirstName { get; set; } = default!;
@@ -16,7 +16,7 @@ namespace IisRest.Contracts.Entities
         public List<BoughtAsset> BoughtAssets { get; set; } = default!;
         public List<SoldAsset> SoldAssets { get; set; } = default!;
 
-        public Profile()
+        public UserProfile()
         {
             UserName = $"{Guid.NewGuid()}";
         }

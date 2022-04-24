@@ -8,7 +8,7 @@ namespace IisRest.Contracts.Entities
         public DateTime BuyDate { get; set; }
         public double Amount { get; set; }
 
-        public Profile Profile { get; set; } = default!;
+        public UserProfile Profile { get; set; } = default!;
         public Asset Asset { get; set; } = default!;
     }
 }

@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace IisRest.Data.Db.MsSql.Configuration
 {
-    internal class ProfileConfiguration : IEntityTypeConfiguration<Profile>
+    internal class ProfileConfiguration : IEntityTypeConfiguration<UserProfile>
     {
-        public void Configure(EntityTypeBuilder<Profile> builder)
+        public void Configure(EntityTypeBuilder<UserProfile> builder)
         {
             builder.HasKey(p => p.Id);
 
