@@ -1,0 +1,44 @@
+using IisRest.Contracts.Entities;
+using IisRest.Contracts.Extensions;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace IisRest.Data.Db.MsSql.Configuration
+{
+    internal class AssetConfiguration : BaseEntityConfiguration<Asset>
+    {
+        public override void Configure(EntityTypeBuilder<Asset> builder)
+        {
+            base.Configure(builder);
+
+            builder.HasKey(x => x.Id);
+
+            builder.HasMany(x => x.Prices)
+               .WithOne(x => x.Asset)
+               .HasForeignKey(x => x.AssetId)
+               .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasMany(x => x.BoghtAssets)
+                .WithOne(x => x.Asset)
+                .HasForeignKey(x => x.AssetId);
+
+            builder.HasMany(x => x.SoldAssets)
+                .WithOne(x => x.Asset)
+                .HasForeignKey(x => x.AssetId);
+
+            builder.Property(x => x.Name)
+                .HasMaxLength(256)
+                .IsRequired(true);
+
+            builder.Property(x => x.Symbol)
+                .HasMaxLength(25)
+                .IsRequired(true);
+
+            builder.Property(x => x.AssetType)
+                .HasConversion(
+                    x => (int)x,
+                    x => x.GetAssetTypeFromInt())
+                .IsRequired(true);
+        }
+    }
+}
