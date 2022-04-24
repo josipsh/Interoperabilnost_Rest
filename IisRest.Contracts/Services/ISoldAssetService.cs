@@ -1,11 +1,11 @@
-using IisRest.Contracts.Entities;
+using IisRest.Contracts.Dtos.SoldAsset;
 
 namespace IisRest.Contracts.Services
 {
     public interface ISoldAssetService
     {
-        IEnumerable<SoldAsset> GetAll();
-        SoldAsset GetById(int id);
-        void Create(SoldAsset soldAsset);
+        IEnumerable<SoldAssetReadDto> GetAll();
+        SoldAssetReadDto GetById(int id);
+        SoldAssetReadDto Create(SoldAssetCreateDto soldAsset);
     }
 }

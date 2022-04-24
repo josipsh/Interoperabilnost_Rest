@@ -1,5 +1,6 @@
 using AutoMapper;
 using IisRest.Contracts.Dtos.SoldAsset;
+using IisRest.Contracts.Entities;
 
 namespace IisRest.API.Profiles
 {

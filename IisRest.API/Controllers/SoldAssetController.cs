@@ -1,5 +1,3 @@
-using AutoMapper;
-using IisRest.Contracts.Dtos;
 using IisRest.Contracts.Dtos.SoldAsset;
 using IisRest.Contracts.Entities;
 using IisRest.Contracts.Services;
@@ -12,33 +10,29 @@ namespace IisRest.API.Controllers
     public class SoldAssetController : ControllerBase
     {
         private readonly ISoldAssetService _service;
-        private readonly IMapper _mapper;
 
-        public SoldAssetController(ISoldAssetService soldAssetService, IMapper mapper)
+        public SoldAssetController(ISoldAssetService soldAssetService)
         {
             _service = soldAssetService;
-            _mapper = mapper;
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<SoldAssetReadDto>> GetAll()
         {
-            return Ok(_mapper.Map<IEnumerable<SoldAssetReadDto>>(_service.GetAll()));
+            return Ok(_service.GetAll());
         }
 
         [HttpGet("{id}", Name = "GetById")]
         public ActionResult<SoldAssetReadDto> GetById(int id)
         {
-            return Ok(_mapper.Map<SoldAssetReadDto>(_service.GetById(id)));
+            return Ok(_service.GetById(id));
         }
 
         [HttpPost]
         public ActionResult<SoldAsset> CreateSoldAssetRecord([FromBody] SoldAssetCreateDto soldAssetDto)
         {
-            SoldAsset soldAsset = _mapper.Map<SoldAsset>(soldAssetDto);
-            soldAsset.ProfileId = 6;
-            _service.Create(soldAsset);
-            return CreatedAtRoute(nameof(GetById), new { Id = soldAsset.Id }, _mapper.Map<SoldAssetReadDto>(soldAsset));
+            SoldAssetReadDto soldAsset = _service.Create(soldAssetDto);
+            return CreatedAtRoute(nameof(GetById), new { Id = soldAsset.Id }, soldAsset);
         }
     }
 }
