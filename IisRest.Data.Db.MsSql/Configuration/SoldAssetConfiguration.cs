@@ -17,9 +17,6 @@ namespace IisRest.Data.Db.MsSql.Configuration
             builder.Property(p => p.ProfileId)
                 .HasMaxLength(500);
 
-            // builder.Property(p => p.PriceId)
-            //    .IsRequired(true);
-
             builder.Property(p => p.SellDate)
                 .IsRequired(true);
 

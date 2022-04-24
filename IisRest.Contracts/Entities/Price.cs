@@ -10,7 +10,5 @@ namespace IisRest.Contracts.Entities
 
         public Asset Asset { get; set; } = default!;
         public Currency Currency { get; set; } = default!;
-        public List<BoughtAsset> BoghtAssets { get; set; } = default!;
-        // public List<SoldAsset> SoldAssets { get; set; } = default!;
     }
 }

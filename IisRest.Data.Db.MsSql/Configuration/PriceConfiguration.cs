@@ -11,14 +11,6 @@ namespace IisRest.Data.Db.MsSql.Configuration
 
             builder.HasKey(x => x.Id);
 
-            builder.HasMany(x => x.BoghtAssets)
-                .WithOne(x => x.Price)
-                .HasForeignKey(x => x.PriceId);
-
-            // builder.HasMany(x => x.SoldAssets)
-            //    .WithOne(x => x.Price)
-            //    .HasForeignKey(x => x.PriceId);
-
             builder.Property(x => x.AssetId)
                .IsRequired(true);
 

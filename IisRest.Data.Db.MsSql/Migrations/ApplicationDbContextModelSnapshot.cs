@@ -77,9 +77,6 @@ namespace IisRest.Data.Db.MsSql.Migrations
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PriceId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ProfileId")
                         .HasMaxLength(500)
                         .HasColumnType("int");
@@ -87,8 +84,6 @@ namespace IisRest.Data.Db.MsSql.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AssetId");
-
-                    b.HasIndex("PriceId");
 
                     b.HasIndex("ProfileId");
 
@@ -425,12 +420,6 @@ namespace IisRest.Data.Db.MsSql.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("IisRest.Contracts.Entities.Price", "Price")
-                        .WithMany("BoghtAssets")
-                        .HasForeignKey("PriceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("IisRest.Contracts.Entities.Profile", "Profile")
                         .WithMany("BoughtAssets")
                         .HasForeignKey("ProfileId")
@@ -438,8 +427,6 @@ namespace IisRest.Data.Db.MsSql.Migrations
                         .IsRequired();
 
                     b.Navigation("Asset");
-
-                    b.Navigation("Price");
 
                     b.Navigation("Profile");
                 });
@@ -545,11 +532,6 @@ namespace IisRest.Data.Db.MsSql.Migrations
             modelBuilder.Entity("IisRest.Contracts.Entities.Currency", b =>
                 {
                     b.Navigation("Prices");
-                });
-
-            modelBuilder.Entity("IisRest.Contracts.Entities.Price", b =>
-                {
-                    b.Navigation("BoghtAssets");
                 });
 
             modelBuilder.Entity("IisRest.Contracts.Entities.Profile", b =>
