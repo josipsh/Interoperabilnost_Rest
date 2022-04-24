@@ -1,3 +1,4 @@
+using IisRest.Contracts.Dtos;
 using Microsoft.AspNetCore.Identity;
 
 namespace IisRest.Contracts.Entities
@@ -18,6 +19,18 @@ namespace IisRest.Contracts.Entities
         public Profile()
         {
             UserName = $"{Guid.NewGuid()}";
+        }
+
+        public BasicRegisterResponse ToRegisterResponse()
+        {
+            return new BasicRegisterResponse()
+            {
+                Email = Email,
+                FirstName = FirstName,
+                LastName = LastName,
+                MiddleName = MiddleName,
+                UserName = UserName,
+            };
         }
     }
 }
