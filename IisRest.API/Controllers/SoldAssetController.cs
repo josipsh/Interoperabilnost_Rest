@@ -1,5 +1,6 @@
 using AutoMapper;
 using IisRest.Contracts.Dtos;
+using IisRest.Contracts.Dtos.SoldAsset;
 using IisRest.Contracts.Entities;
 using IisRest.Contracts.Services;
 using Microsoft.AspNetCore.Mvc;

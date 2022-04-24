@@ -1,4 +1,4 @@
-namespace IisRest.Contracts.Dtos
+namespace IisRest.Contracts.Dtos.Auth
 {
     public class BasicRegisterResponse
     {

@@ -1,6 +1,6 @@
 using System.Security.Claims;
 using IisRest.Contracts.Auth;
-using IisRest.Contracts.Dtos;
+using IisRest.Contracts.Dtos.Auth;
 using IisRest.Contracts.Entities;
 using IisRest.Contracts.Services;
 using Microsoft.AspNetCore.Identity;

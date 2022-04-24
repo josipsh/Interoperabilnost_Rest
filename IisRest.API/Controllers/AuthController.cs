@@ -1,4 +1,4 @@
-using IisRest.Contracts.Dtos;
+using IisRest.Contracts.Dtos.Auth;
 using IisRest.Contracts.Services;
 using Microsoft.AspNetCore.Mvc;
 

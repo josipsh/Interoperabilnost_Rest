@@ -1,4 +1,7 @@
-namespace IisRest.Contracts.Dtos
+using IisRest.Contracts.Dtos.Asset;
+using IisRest.Contracts.Dtos.Price;
+
+namespace IisRest.Contracts.Dtos.SoldAsset
 {
     public class SoldAssetCreateDto
     {
