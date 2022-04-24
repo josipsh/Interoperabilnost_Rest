@@ -1,3 +1,5 @@
+using IisRest.Contracts.Dtos.Asset;
+
 namespace IisRest.Contracts.Entities
 {
     public class Asset : BaseEntity
@@ -10,5 +12,16 @@ namespace IisRest.Contracts.Entities
         public List<Price> Prices { get; set; } = default!;
         public List<BoughtAsset> BoghtAssets { get; set; } = default!;
         public List<SoldAsset> SoldAssets { get; set; } = default!;
+
+        public AssetReadDto ToReadDto()
+        {
+            return new AssetReadDto()
+            {
+                Id = Id,
+                Name = Name,
+                Symbol = Symbol,
+                AssetType = AssetType,
+            };
+        }
     }
 }

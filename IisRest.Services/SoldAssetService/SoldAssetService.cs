@@ -9,17 +9,15 @@ namespace IisRest.Services.SoldAssetService
     public class SoldAssetService : ISoldAssetService
     {
         private readonly IUnitOfWork _uow;
-        private readonly IMapper _mapper;
 
-        public SoldAssetService(IUnitOfWork unitOfWork, IMapper mapper)
+        public SoldAssetService(IUnitOfWork unitOfWork)
         {
             _uow = unitOfWork;
-            _mapper = mapper;
         }
 
         public IEnumerable<SoldAssetReadDto> GetAll()
         {
-            return _mapper.Map<IEnumerable<SoldAssetReadDto>>(_uow.SoldAssetRepository.GetAll());
+            return _uow.SoldAssetRepository.GetAll().Select(x => x.ToReadDto());
         }
 
         public SoldAssetReadDto GetById(int id)
@@ -27,7 +25,7 @@ namespace IisRest.Services.SoldAssetService
             SoldAsset? soldAsset = _uow.SoldAssetRepository.GetById(id);
             if (soldAsset != null)
             {
-                return _mapper.Map<SoldAssetReadDto>(soldAsset);
+                return soldAsset.ToReadDto();
             }
 
             throw new Exception($"No record with id {id}");
@@ -40,12 +38,19 @@ namespace IisRest.Services.SoldAssetService
                 throw new ArgumentNullException(nameof(soldAsset));
             }
 
-            SoldAsset soldAssetModel = _mapper.Map<SoldAsset>(soldAsset);
+            SoldAsset soldAssetModel = soldAsset.ToModel();
+            Price price = soldAsset.Price.ToModel();
+
+            soldAssetModel.ProfileId = 12;
 
             _uow.SoldAssetRepository.Create(soldAssetModel);
             _uow.SaveChanges();
 
-            return _mapper.Map<SoldAssetReadDto>(soldAssetModel);
+            price.AssetId = soldAssetModel.AssetId;
+            _uow.PriceRepository.Create(price);
+            _uow.SaveChanges();
+
+            return soldAssetModel.ToReadDto();
         }
     }
 }

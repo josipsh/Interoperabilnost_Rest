@@ -19,11 +19,12 @@ namespace IisRest.Data.Db.MsSql.Configuration
         {
         }
 
-        // public override int SaveChanges()
-        // {
-        //    SavingChanges += ApplicationDbContext_SavingChanges;
-        //    return base.SaveChanges();
-        // }
+        // synchronous and asynchronous must be overridden in order to save date created and modified
+        public override int SaveChanges()
+        {
+            SavingChanges += ApplicationDbContext_SavingChanges;
+            return base.SaveChanges();
+        }
 
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {

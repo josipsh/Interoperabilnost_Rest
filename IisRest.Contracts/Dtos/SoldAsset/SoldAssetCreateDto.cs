@@ -9,5 +9,15 @@ namespace IisRest.Contracts.Dtos.SoldAsset
         public double Amount { get; set; }
         public PriceCreateDto Price { get; set; } = default!;
         public AssetCreateDto Asset { get; set; } = default!;
+
+        public Entities.SoldAsset ToModel()
+        {
+            return new Entities.SoldAsset()
+            {
+                Asset = Asset.ToModel(),
+                Amount = Amount,
+                SellDate = SellDate,
+            };
+        }
     }
 }
