@@ -1,5 +1,4 @@
 using IisRest.Contracts.Dtos.BoughtAsset;
-using IisRest.Contracts.Entities;
 
 namespace IisRest.Contracts.Services
 {
@@ -7,6 +6,6 @@ namespace IisRest.Contracts.Services
     {
         IEnumerable<BoughtAssetReadDto> GetAll(int userId);
         BoughtAssetReadDto GetById(int userId, int id);
-        void Create(int userId, BoughtAssetCreateDto boughtAsset);
+        BoughtAssetReadDto Create(int userId, BoughtAssetCreateDto boughtAsset);
     }
 }

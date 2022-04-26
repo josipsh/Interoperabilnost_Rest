@@ -39,7 +39,7 @@ namespace IisRest.Services.BoughtAssetService
             return boughtAsset.ToReadDto();
         }
 
-        public void Create(int userId, BoughtAssetCreateDto boughtAsset)
+        public BoughtAssetReadDto Create(int userId, BoughtAssetCreateDto boughtAsset)
         {
             if (boughtAsset == null)
             {
@@ -53,6 +53,8 @@ namespace IisRest.Services.BoughtAssetService
             _uow.AssetRepository.Create(boughtAssetModel.AssetPrice.Asset);
             _uow.BoughtAssetRepository.Create(boughtAssetModel);
             _uow.SaveChanges();
+
+            return boughtAssetModel.ToReadDto();
         }
 
     }
