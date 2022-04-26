@@ -1,4 +1,3 @@
-using AutoMapper;
 using IisRest.Contracts.Dtos.SoldAsset;
 using IisRest.Contracts.Entities;
 using IisRest.Contracts.Repositories;
@@ -30,6 +29,7 @@ namespace IisRest.Services.SoldAssetService
             {
                 throw new Exception($"No record with id {id}");
             }
+
             if (soldAsset.ProfileId != userId)
             {
                 throw new Exception($"Unexpected error occured. We are working on it");
