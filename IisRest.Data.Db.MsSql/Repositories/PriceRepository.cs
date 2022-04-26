@@ -18,7 +18,8 @@ namespace IisRest.Data.Db.MsSql.Repositories
         {
             return _context.Prices
                 .Include(x => x.Currency)
-                .Include(x => x.Asset)
+                .Include(x => x.AssetPrice)
+                .ThenInclude(x => x.Asset)
                 .ToList();
         }
 
@@ -26,7 +27,8 @@ namespace IisRest.Data.Db.MsSql.Repositories
         {
             return _context.Prices
                 .Include(x => x.Currency)
-                .Include(x => x.Asset)
+                .Include(x => x.AssetPrice)
+                .ThenInclude(x => x.Asset)
                 .FirstOrDefault(x => x.Id == id);
         }
     }

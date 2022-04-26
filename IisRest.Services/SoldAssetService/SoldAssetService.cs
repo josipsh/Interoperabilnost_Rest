@@ -39,15 +39,11 @@ namespace IisRest.Services.SoldAssetService
             }
 
             SoldAsset soldAssetModel = soldAsset.ToModel();
-            Price price = soldAsset.Price.ToModel();
 
-            soldAssetModel.ProfileId = 12;
-
+            soldAssetModel.ProfileId = 1;
+            _uow.PriceRepository.Create(soldAssetModel.AssetPrice.Price);
+            _uow.AssetRepository.Create(soldAssetModel.AssetPrice.Asset);
             _uow.SoldAssetRepository.Create(soldAssetModel);
-            _uow.SaveChanges();
-
-            price.AssetId = soldAssetModel.AssetId;
-            _uow.PriceRepository.Create(price);
             _uow.SaveChanges();
 
             return soldAssetModel.ToReadDto();

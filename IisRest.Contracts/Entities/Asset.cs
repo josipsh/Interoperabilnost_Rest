@@ -9,9 +9,7 @@ namespace IisRest.Contracts.Entities
         public string Symbol { get; set; } = default!;
         public AssetType AssetType { get; set; } = default!;
 
-        public List<Price> Prices { get; set; } = default!;
-        public List<BoughtAsset> BoghtAssets { get; set; } = default!;
-        public List<SoldAsset> SoldAssets { get; set; } = default!;
+        public List<AssetPrice> AssetPrices { get; set; } = default!;
 
         public AssetReadDto ToReadDto()
         {

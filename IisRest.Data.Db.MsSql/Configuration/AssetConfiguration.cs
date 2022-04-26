@@ -13,18 +13,9 @@ namespace IisRest.Data.Db.MsSql.Configuration
 
             builder.HasKey(x => x.Id);
 
-            builder.HasMany(x => x.Prices)
+            builder.HasMany(x => x.AssetPrices)
                .WithOne(x => x.Asset)
-               .HasForeignKey(x => x.AssetId)
-               .OnDelete(DeleteBehavior.NoAction);
-
-            builder.HasMany(x => x.BoghtAssets)
-                .WithOne(x => x.Asset)
-                .HasForeignKey(x => x.AssetId);
-
-            builder.HasMany(x => x.SoldAssets)
-                .WithOne(x => x.Asset)
-                .HasForeignKey(x => x.AssetId);
+               .HasForeignKey(x => x.AssetId);
 
             builder.Property(x => x.Name)
                 .HasMaxLength(256)

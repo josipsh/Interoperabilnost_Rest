@@ -17,10 +17,12 @@ namespace IisRest.Data.Db.MsSql.Repositories
         public override IEnumerable<SoldAsset> GetAll()
         {
             return _context.SoldAssets
-                .Include(s => s.Profile)
-                .Include(s => s.Asset)
-                .ThenInclude(p => p.Prices)
+                .Include(b => b.Profile)
+                .Include(b => b.AssetPrice)
+                .ThenInclude(p => p.Price)
                 .ThenInclude(c => c.Currency)
+                .Include(b => b.AssetPrice)
+                .ThenInclude(p => p.Asset)
                 .ToList();
         }
 
@@ -28,11 +30,12 @@ namespace IisRest.Data.Db.MsSql.Repositories
         {
 
             return _context.SoldAssets
-                .Include(s => s.Profile)
-                .Include(s => s.Asset)
-                .ThenInclude(p => p.Prices)
+                .Include(b => b.Profile)
+                .Include(b => b.AssetPrice)
+                .ThenInclude(p => p.Price)
                 .ThenInclude(c => c.Currency)
-                .FirstOrDefault(x => x.Id == id);
+                .Include(b => b.AssetPrice)
+                .ThenInclude(p => p.Asset).FirstOrDefault(x => x.Id == id);
         }
     }
 }

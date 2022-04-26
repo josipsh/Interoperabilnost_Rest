@@ -1,4 +1,5 @@
 using IisRest.Contracts.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace IisRest.Data.Db.MsSql.Configuration
@@ -11,7 +12,12 @@ namespace IisRest.Data.Db.MsSql.Configuration
 
             builder.HasKey(p => p.Id);
 
-            builder.Property(p => p.AssetId)
+            builder.HasOne(x => x.AssetPrice)
+               .WithMany(x => x.SoldAssets)
+               .HasForeignKey(x => x.AssetPriceId)
+               .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Property(p => p.AssetPriceId)
                 .IsRequired();
 
             builder.Property(p => p.ProfileId)

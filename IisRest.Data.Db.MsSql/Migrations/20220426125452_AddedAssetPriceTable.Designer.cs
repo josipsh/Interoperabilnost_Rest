@@ -4,6 +4,7 @@ using IisRest.Data.Db.MsSql.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IisRest.Data.Db.MsSql.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220426125452_AddedAssetPriceTable")]
+    partial class AddedAssetPriceTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -81,7 +83,7 @@ namespace IisRest.Data.Db.MsSql.Migrations
                     b.HasIndex("PriceId")
                         .IsUnique();
 
-                    b.ToTable("AssetPrices");
+                    b.ToTable("AssetPrice");
                 });
 
             modelBuilder.Entity("IisRest.Contracts.Entities.BoughtAsset", b =>
@@ -112,8 +114,6 @@ namespace IisRest.Data.Db.MsSql.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AssetPriceId");
 
                     b.HasIndex("ProfileId");
 
@@ -207,8 +207,6 @@ namespace IisRest.Data.Db.MsSql.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AssetPriceId");
 
                     b.HasIndex("ProfileId");
 
@@ -445,32 +443,40 @@ namespace IisRest.Data.Db.MsSql.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("IisRest.Contracts.Entities.BoughtAsset", "BoughtAsset")
+                        .WithOne("AssetPrice")
+                        .HasForeignKey("IisRest.Contracts.Entities.AssetPrice", "PriceId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("IisRest.Contracts.Entities.Price", "Price")
                         .WithOne("AssetPrice")
                         .HasForeignKey("IisRest.Contracts.Entities.AssetPrice", "PriceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("IisRest.Contracts.Entities.SoldAsset", "SoldAsset")
+                        .WithOne("AssetPrice")
+                        .HasForeignKey("IisRest.Contracts.Entities.AssetPrice", "PriceId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.Navigation("Asset");
 
+                    b.Navigation("BoughtAsset");
+
                     b.Navigation("Price");
+
+                    b.Navigation("SoldAsset");
                 });
 
             modelBuilder.Entity("IisRest.Contracts.Entities.BoughtAsset", b =>
                 {
-                    b.HasOne("IisRest.Contracts.Entities.AssetPrice", "AssetPrice")
-                        .WithMany("BoughtAssets")
-                        .HasForeignKey("AssetPriceId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("IisRest.Contracts.Entities.UserProfile", "Profile")
                         .WithMany("BoughtAssets")
                         .HasForeignKey("ProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("AssetPrice");
 
                     b.Navigation("Profile");
                 });
@@ -488,19 +494,11 @@ namespace IisRest.Data.Db.MsSql.Migrations
 
             modelBuilder.Entity("IisRest.Contracts.Entities.SoldAsset", b =>
                 {
-                    b.HasOne("IisRest.Contracts.Entities.AssetPrice", "AssetPrice")
-                        .WithMany("SoldAssets")
-                        .HasForeignKey("AssetPriceId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("IisRest.Contracts.Entities.UserProfile", "Profile")
                         .WithMany("SoldAssets")
                         .HasForeignKey("ProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("AssetPrice");
 
                     b.Navigation("Profile");
                 });
@@ -561,11 +559,10 @@ namespace IisRest.Data.Db.MsSql.Migrations
                     b.Navigation("AssetPrices");
                 });
 
-            modelBuilder.Entity("IisRest.Contracts.Entities.AssetPrice", b =>
+            modelBuilder.Entity("IisRest.Contracts.Entities.BoughtAsset", b =>
                 {
-                    b.Navigation("BoughtAssets");
-
-                    b.Navigation("SoldAssets");
+                    b.Navigation("AssetPrice")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("IisRest.Contracts.Entities.Currency", b =>
@@ -574,6 +571,12 @@ namespace IisRest.Data.Db.MsSql.Migrations
                 });
 
             modelBuilder.Entity("IisRest.Contracts.Entities.Price", b =>
+                {
+                    b.Navigation("AssetPrice")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("IisRest.Contracts.Entities.SoldAsset", b =>
                 {
                     b.Navigation("AssetPrice")
                         .IsRequired();

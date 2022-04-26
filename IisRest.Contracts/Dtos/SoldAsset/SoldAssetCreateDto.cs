@@ -14,9 +14,13 @@ namespace IisRest.Contracts.Dtos.SoldAsset
         {
             return new Entities.SoldAsset()
             {
-                Asset = Asset.ToModel(),
                 Amount = Amount,
                 SellDate = SellDate,
+                AssetPrice = new Entities.AssetPrice()
+                {
+                    Asset = Asset.ToModel(),
+                    Price = Price.ToModel(),
+                },
             };
         }
     }
