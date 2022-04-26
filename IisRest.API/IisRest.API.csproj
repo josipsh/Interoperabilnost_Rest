@@ -17,10 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Middlewares\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\IisRest.Data.Db.MsSql\IisRest.Data.Db.MsSql.csproj" />
     <ProjectReference Include="..\IisRest.Services\IisRest.Services.csproj" />
   </ItemGroup>
