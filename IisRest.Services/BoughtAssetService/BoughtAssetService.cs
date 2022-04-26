@@ -1,3 +1,4 @@
+using IisRest.Contracts.Dtos.BoughtAsset;
 using IisRest.Contracts.Entities;
 using IisRest.Contracts.Repositories;
 using IisRest.Contracts.Services;
@@ -13,31 +14,45 @@ namespace IisRest.Services.BoughtAssetService
             _uow = unitOfWork;
         }
 
-        public IEnumerable<BoughtAsset> GetAll()
+        public IEnumerable<BoughtAssetReadDto> GetAll(int userId)
         {
-            return _uow.BoughtAssetRepository.GetAll();
+            return _uow.BoughtAssetRepository
+                .GetAll()
+                .Where(x => x.ProfileId == userId)
+                .Select(x => x.ToReadDto());
         }
 
-        public BoughtAsset GetById(int id)
+        public BoughtAssetReadDto GetById(int userId, int id)
         {
             BoughtAsset? boughtAsset = _uow.BoughtAssetRepository.GetById(id);
 
-            if (boughtAsset != null)
+            if (boughtAsset == null)
             {
-                return boughtAsset;
+                throw new Exception($"No record with id {id}");
             }
 
-            throw new Exception($"No record with id {id}");
+            if (boughtAsset.ProfileId != userId)
+            {
+                throw new Exception($"Unexpected error occured. We are working on it");
+            }
+
+            return boughtAsset.ToReadDto();
         }
 
-        public void Create(BoughtAsset boughtAsset)
+        public void Create(int userId, BoughtAssetCreateDto boughtAsset)
         {
             if (boughtAsset == null)
             {
                 throw new ArgumentNullException(nameof(boughtAsset));
             }
 
-            _uow.BoughtAssetRepository.Create(boughtAsset);
+            BoughtAsset boughtAssetModel = boughtAsset.ToModel();
+            boughtAssetModel.ProfileId = userId;
+
+            _uow.PriceRepository.Create(boughtAssetModel.AssetPrice.Price);
+            _uow.AssetRepository.Create(boughtAssetModel.AssetPrice.Asset);
+            _uow.BoughtAssetRepository.Create(boughtAssetModel);
+            _uow.SaveChanges();
         }
 
     }
