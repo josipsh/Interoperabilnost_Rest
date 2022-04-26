@@ -4,8 +4,8 @@ namespace IisRest.Contracts.Services
 {
     public interface ISoldAssetService
     {
-        IEnumerable<SoldAssetReadDto> GetAll();
-        SoldAssetReadDto GetById(int id);
-        SoldAssetReadDto Create(SoldAssetCreateDto soldAsset);
+        IEnumerable<SoldAssetReadDto> GetAll(int userId);
+        SoldAssetReadDto GetById(int userId, int id);
+        SoldAssetReadDto Create(int userId, SoldAssetCreateDto soldAsset);
     }
 }

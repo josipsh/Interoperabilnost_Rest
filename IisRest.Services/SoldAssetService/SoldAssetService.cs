@@ -15,23 +15,30 @@ namespace IisRest.Services.SoldAssetService
             _uow = unitOfWork;
         }
 
-        public IEnumerable<SoldAssetReadDto> GetAll()
+        public IEnumerable<SoldAssetReadDto> GetAll(int userId)
         {
-            return _uow.SoldAssetRepository.GetAll().Select(x => x.ToReadDto());
+            return _uow.SoldAssetRepository
+                .GetAll()
+                .Where(x => x.ProfileId == userId)
+                .Select(x => x.ToReadDto());
         }
 
-        public SoldAssetReadDto GetById(int id)
+        public SoldAssetReadDto GetById(int userId, int id)
         {
             SoldAsset? soldAsset = _uow.SoldAssetRepository.GetById(id);
-            if (soldAsset != null)
+            if (soldAsset == null)
             {
-                return soldAsset.ToReadDto();
+                throw new Exception($"No record with id {id}");
+            }
+            if (soldAsset.ProfileId != userId)
+            {
+                throw new Exception($"Unexpected error occured. We are working on it");
             }
 
-            throw new Exception($"No record with id {id}");
+            return soldAsset.ToReadDto();
         }
 
-        public SoldAssetReadDto Create(SoldAssetCreateDto soldAsset)
+        public SoldAssetReadDto Create(int userId, SoldAssetCreateDto soldAsset)
         {
             if (soldAsset == null)
             {
@@ -40,7 +47,7 @@ namespace IisRest.Services.SoldAssetService
 
             SoldAsset soldAssetModel = soldAsset.ToModel();
 
-            soldAssetModel.ProfileId = 1;
+            soldAssetModel.ProfileId = userId;
             _uow.PriceRepository.Create(soldAssetModel.AssetPrice.Price);
             _uow.AssetRepository.Create(soldAssetModel.AssetPrice.Asset);
             _uow.SoldAssetRepository.Create(soldAssetModel);
