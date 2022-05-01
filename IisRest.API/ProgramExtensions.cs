@@ -8,6 +8,7 @@ using IisRest.Data.Db.MsSql.Configuration;
 using IisRest.Data.Db.MsSql.Repositories;
 using IisRest.Services.AuthService;
 using IisRest.Services.BoughtAssetService;
+using IisRest.Services.ReportService;
 using IisRest.Services.SoldAssetService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -35,6 +36,7 @@ namespace IisRest.API
             services.AddScoped<ISoldAssetService, SoldAssetService>();
             services.AddScoped<IBoughtAssetService, BoughtAssetService>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IReportService, ReportService>();
             services.AddScoped<ITokenGenerator, JwtTokenGenerator>();
         }
 
