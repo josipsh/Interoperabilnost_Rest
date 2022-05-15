@@ -1,6 +1,7 @@
 using System.Text;
 using IisRest.Contracts.Auth;
 using IisRest.Contracts.Entities;
+using IisRest.Contracts.Helpers;
 using IisRest.Contracts.Repositories;
 using IisRest.Contracts.Services;
 using IisRest.Contracts.Settings;
@@ -8,6 +9,7 @@ using IisRest.Data.Db.MsSql.Configuration;
 using IisRest.Data.Db.MsSql.Repositories;
 using IisRest.Services.AuthService;
 using IisRest.Services.BoughtAssetService;
+using IisRest.Services.Helpers;
 using IisRest.Services.ReportService;
 using IisRest.Services.SoldAssetService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -23,6 +25,9 @@ namespace IisRest.API
         {
             services.Configure<JwtSettings>(
                 configuration.GetSection("JWTSettings"));
+
+            services.Configure<AssetPriceProviderSettings>(
+                configuration.GetSection("AssetPriceProviderSettings"));
         }
 
         internal static void ConfigureAutoMapper(this IServiceCollection services, ConfigurationManager configuration)
@@ -38,6 +43,7 @@ namespace IisRest.API
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IReportService, ReportService>();
             services.AddScoped<ITokenGenerator, JwtTokenGenerator>();
+            services.AddScoped<IHelpersWraper, HelpersWraper>();
         }
 
         internal static void ConfigureDatabase(this IServiceCollection services, ConfigurationManager configuration)

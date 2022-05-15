@@ -1,3 +1,4 @@
+using IisRest.Contracts.Dtos.ReportDtos;
 using IisRest.Contracts.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,9 +16,9 @@ namespace IisRest.API.Controllers
         }
 
         [HttpGet("fullReport/{userId}")]
-        public IActionResult GetFullReport(int userId)
+        public ActionResult<List<ReportReadDto>> GetFullReport(int userId)
         {
-            return Ok();
+            return Ok(_service.GetFullReport(userId));
         }
     }
 }

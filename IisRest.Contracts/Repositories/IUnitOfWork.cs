@@ -6,6 +6,7 @@ namespace IisRest.Contracts.Repositories
         public ISoldAssetRepository SoldAssetRepository { get; }
         public IPriceRepository PriceRepository { get; }
         public IAssetRepository AssetRepository { get; }
+        public ICurrencyRepository CurrencyRepository { get; }
 
         void SaveChanges();
     }
