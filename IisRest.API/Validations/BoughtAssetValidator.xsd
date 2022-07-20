@@ -2,12 +2,12 @@
   <xs:element name="BoughtAssetCreateDto">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="buyDate" type="xs:dateTime" />
-        <xs:element name="amount" type="xs:float" />
-        <xs:element name="assetId" type="xs:integer" />
-        <xs:element name="currencyId" type="xs:integer" />
-        <xs:element name="priceRate" type="xs:float" />
-        <xs:element name="priceDate" type="xs:dateTime" />
+        <xs:element name="BuyDate" type="xs:dateTime" />
+        <xs:element name="Amount" type="xs:float" />
+        <xs:element name="AssetId" type="xs:integer" />
+        <xs:element name="CurrencyId" type="xs:integer" />
+        <xs:element name="PriceRate" type="xs:float" />
+        <xs:element name="PriceDate" type="xs:dateTime" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

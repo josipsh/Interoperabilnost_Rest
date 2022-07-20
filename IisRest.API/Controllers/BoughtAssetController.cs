@@ -1,4 +1,7 @@
+using System.Runtime.Serialization;
 using System.Security.Claims;
+using System.Xml;
+using System.Xml.Schema;
 using IisRest.Contracts.Dtos.BoughtAsset;
 using IisRest.Contracts.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -12,6 +15,8 @@ namespace IisRest.API.Controllers
     public class BoughtAssetController : ControllerBase
     {
         private readonly IBoughtAssetService _service;
+
+        private bool isXmlElemetValid = true;
 
         public BoughtAssetController(IBoughtAssetService soldAssetService)
         {
@@ -34,9 +39,32 @@ namespace IisRest.API.Controllers
         }
 
         [HttpPost]
-        public ActionResult<BoughtAssetReadDto> CreateBoughtAssetRecord([FromBody] BoughtAssetCreateDto boughtAssetDto)
+        public ActionResult<BoughtAssetReadDto> CreateBoughtAssetRecord([FromBody] XmlElement boughtAssetXml)
         {
+            XmlDocument xmlDocument = boughtAssetXml.OwnerDocument;
+            xmlDocument.AppendChild(boughtAssetXml);
+            xmlDocument.Schemas.Add("http://schemas.datacontract.org/2004/07/IisRest.Contracts.Dtos.BoughtAsset", "validations/BoughtAssetValidator.xsd");
+
+            ValidationEventHandler validationEventHandler = new ValidationEventHandler(XmlValidationEventHandler);
+            xmlDocument.Validate(validationEventHandler);
+
+            if (!isXmlElemetValid)
+            {
+                throw new Exception("Xml is invalid");
+            }
+
             GetUserData(out int userId, out string userName, out string email);
+
+            DataContractSerializer deserializer = new DataContractSerializer(typeof(BoughtAssetCreateDto));
+            MemoryStream memoeryStream = new MemoryStream();
+            xmlDocument.Save(memoeryStream);
+            memoeryStream.Position = 0;
+            BoughtAssetCreateDto? boughtAssetDto = (BoughtAssetCreateDto?)deserializer.ReadObject(memoeryStream);
+
+            if (boughtAssetDto is null)
+            {
+                throw new Exception("Unable to deserialize xml");
+            }
 
             BoughtAssetReadDto boughtAsset = _service.Create(userId, boughtAssetDto);
             return CreatedAtRoute(nameof(GetBoughtAssetsById), new { Id = boughtAsset.Id }, boughtAsset);
@@ -73,6 +101,11 @@ namespace IisRest.API.Controllers
             }
 
             email = emailClaim.Value;
+        }
+
+        private void XmlValidationEventHandler(object? sender, ValidationEventArgs e)
+        {
+            isXmlElemetValid = false;
         }
     }
 }
