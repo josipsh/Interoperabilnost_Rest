@@ -1,4 +1,7 @@
+using System.Runtime.Serialization;
 using System.Security.Claims;
+using System.Xml;
+using Commons.Xml.Relaxng;
 using IisRest.Contracts.Dtos.SoldAsset;
 using IisRest.Contracts.Entities;
 using IisRest.Contracts.Services;
@@ -35,12 +38,38 @@ namespace IisRest.API.Controllers
         }
 
         [HttpPost]
-        public ActionResult<SoldAsset> CreateSoldAssetRecord([FromBody] SoldAssetCreateDto soldAssetDto)
+        public ActionResult<SoldAsset> CreateSoldAssetRecord([FromBody] XmlElement soldAssetXml)
         {
-            GetUserData(out int userId, out string userName, out string email);
+            XmlDocument xmlDocument = soldAssetXml.OwnerDocument;
+            xmlDocument.AppendChild(soldAssetXml);
 
-            SoldAssetReadDto soldAsset = _service.Create(userId, soldAssetDto);
-            return CreatedAtRoute(nameof(GetById), new { Id = soldAsset.Id }, soldAsset);
+            DataContractSerializer deserializer = new DataContractSerializer(typeof(SoldAssetCreateDto));
+            MemoryStream memoeryStream = new MemoryStream();
+            xmlDocument.Save(memoeryStream);
+            memoeryStream.Position = 0;
+
+            XmlTextReader xmlReader = new XmlTextReader(memoeryStream);
+            XmlReader xmlValidator = new XmlTextReader("validations/SoldAssetValidator.rng");
+
+            using (RelaxngValidatingReader validator = new RelaxngValidatingReader(xmlReader, xmlValidator))
+            {
+                while (validator.Read())
+                {
+                    GetUserData(out int userId, out string userName, out string email);
+
+                    memoeryStream.Position = 0;
+                    SoldAssetCreateDto? soldAssetDto = (SoldAssetCreateDto?)deserializer.ReadObject(memoeryStream);
+                    if (soldAssetDto is null)
+                    {
+                        throw new Exception("Unable to deserialize");
+                    }
+
+                    SoldAssetReadDto soldAsset = _service.Create(userId, soldAssetDto);
+                    return CreatedAtRoute(nameof(GetById), new { Id = soldAsset.Id }, soldAsset);
+                }
+
+                throw new Exception("Unknown exception occured");
+            }
         }
 
         private void GetUserData(out int userId, out string userName, out string email)

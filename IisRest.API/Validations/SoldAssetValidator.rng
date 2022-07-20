@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element name="SoldAssetCreateDto"
+         xmlns="http://relaxng.org/ns/structure/1.0"
+         datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
+         ns="http://schemas.datacontract.org/2004/07/IisRest.Contracts.Dtos.SoldAsset">
+    <element name="SellDate">
+        <text/>
+    </element>
+    <element name="Amount">
+        <data type="float"/>
+    </element>
+    <element name="AssetId">
+        <data type="integer"/>
+    </element>
+    <element name="CurrencyId">
+        <data type="integer"/>
+    </element>
+    <element name="PriceRate">
+        <data type="float"/>
+    </element>
+    <element name="PriceDate">
+        <text/>
+    </element>
+</element>
