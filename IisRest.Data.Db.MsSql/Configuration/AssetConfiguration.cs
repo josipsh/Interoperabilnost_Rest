@@ -1,6 +1,5 @@
 using IisRest.Contracts.Entities;
 using IisRest.Contracts.Extensions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace IisRest.Data.Db.MsSql.Configuration
@@ -12,10 +11,6 @@ namespace IisRest.Data.Db.MsSql.Configuration
             base.Configure(builder);
 
             builder.HasKey(x => x.Id);
-
-            builder.HasMany(x => x.AssetPrices)
-               .WithOne(x => x.Asset)
-               .HasForeignKey(x => x.AssetId);
 
             builder.Property(x => x.Name)
                 .HasMaxLength(256)

@@ -18,11 +18,9 @@ namespace IisRest.Data.Db.MsSql.Repositories
         {
             return _context.BoughtAssets
                 .Include(b => b.Profile)
-                .Include(b => b.AssetPrice)
-                .ThenInclude(p => p.Price)
+                .Include(p => p.Price)
                 .ThenInclude(c => c.Currency)
-                .Include(b => b.AssetPrice)
-                .ThenInclude(p => p.Asset)
+                .Include(p => p.Asset)
                 .ToList();
         }
 
@@ -30,11 +28,9 @@ namespace IisRest.Data.Db.MsSql.Repositories
         {
             return _context.BoughtAssets
                 .Include(b => b.Profile)
-                .Include(b => b.AssetPrice)
-                .ThenInclude(p => p.Price)
+                .Include(p => p.Price)
                 .ThenInclude(c => c.Currency)
-                .Include(b => b.AssetPrice)
-                .ThenInclude(p => p.Asset)
+                .Include(p => p.Asset)
                 .FirstOrDefault(a => a.Id == id);
         }
     }

@@ -14,7 +14,6 @@ namespace IisRest.Data.Db.MsSql.Configuration
         public DbSet<SoldAsset> SoldAssets { get; set; } = default!;
         public DbSet<Currency> Currencies { get; set; } = default!;
         public DbSet<Asset> Assets { get; set; } = default!;
-        public DbSet<AssetPrice> AssetPrices { get; set; } = default!;
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {

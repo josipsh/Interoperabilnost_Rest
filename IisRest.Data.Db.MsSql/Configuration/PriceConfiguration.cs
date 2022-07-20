@@ -9,10 +9,6 @@ namespace IisRest.Data.Db.MsSql.Configuration
         {
             base.Configure(builder);
 
-            builder.HasOne(x => x.AssetPrice)
-               .WithOne(x => x.Price)
-               .HasForeignKey<AssetPrice>(x => x.PriceId);
-
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.CurrencyId)

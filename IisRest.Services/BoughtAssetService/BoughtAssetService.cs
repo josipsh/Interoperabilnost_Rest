@@ -46,16 +46,23 @@ namespace IisRest.Services.BoughtAssetService
                 throw new ArgumentNullException(nameof(boughtAsset));
             }
 
+            Price price = new Price()
+            {
+                PriceRate = boughtAsset.PriceRate,
+                CurrencyId = boughtAsset.CurrencyId,
+                PriceDate = boughtAsset.PriceDate,
+            };
+
+            _uow.PriceRepository.Create(price);
+
             BoughtAsset boughtAssetModel = boughtAsset.ToModel();
             boughtAssetModel.ProfileId = userId;
+            boughtAssetModel.PriceId = price.Id;
 
-            _uow.PriceRepository.Create(boughtAssetModel.AssetPrice.Price);
-            _uow.AssetRepository.Create(boughtAssetModel.AssetPrice.Asset);
             _uow.BoughtAssetRepository.Create(boughtAssetModel);
             _uow.SaveChanges();
 
             return boughtAssetModel.ToReadDto();
         }
-
     }
 }

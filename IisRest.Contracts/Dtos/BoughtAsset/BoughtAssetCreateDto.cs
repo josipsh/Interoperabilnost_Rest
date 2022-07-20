@@ -1,6 +1,4 @@
 using System.Runtime.Serialization;
-using IisRest.Contracts.Dtos.Asset;
-using IisRest.Contracts.Dtos.Price;
 
 namespace IisRest.Contracts.Dtos.BoughtAsset
 {
@@ -14,10 +12,16 @@ namespace IisRest.Contracts.Dtos.BoughtAsset
         public double Amount { get; set; }
 
         [DataMember(Order = 2)]
-        public PriceCreateDto Price { get; set; } = default!;
+        public int AssetId { get; set; } = default!;
 
         [DataMember(Order = 3)]
-        public AssetCreateDto Asset { get; set; } = default!;
+        public int CurrencyId { get; set; }
+
+        [DataMember(Order = 4)]
+        public double PriceRate { get; set; }
+
+        [DataMember(Order = 5)]
+        public DateTime PriceDate { get; set; }
 
         public Entities.BoughtAsset ToModel()
         {
@@ -25,11 +29,7 @@ namespace IisRest.Contracts.Dtos.BoughtAsset
             {
                 BuyDate = BuyDate,
                 Amount = Amount,
-                AssetPrice = new Entities.AssetPrice()
-                {
-                    Asset = Asset.ToModel(),
-                    Price = Price.ToModel(),
-                },
+                AssetId = AssetId,
             };
         }
     }

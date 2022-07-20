@@ -9,7 +9,6 @@ namespace IisRest.Contracts.Entities
         public double PriceRate { get; set; }
         public DateTime PriceDate { get; set; }
 
-        public AssetPrice AssetPrice { get; set; } = default!;
         public Currency Currency { get; set; } = default!;
 
         internal PriceReadDto ToReadDto()

@@ -9,8 +9,6 @@ namespace IisRest.Contracts.Entities
         public string Symbol { get; set; } = default!;
         public AssetType AssetType { get; set; } = default!;
 
-        public List<AssetPrice> AssetPrices { get; set; } = default!;
-
         public AssetReadDto ToReadDto()
         {
             return new AssetReadDto()

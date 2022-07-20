@@ -42,7 +42,7 @@ namespace IisRest.Services.ReportService
                 {
                     report.Add(new ReportReadDto()
                     {
-                        Asset = item.Value[0].AssetPrice.Asset.ToReadDto(),
+                        Asset = item.Value[0].Asset.ToReadDto(),
                         SoldAsstes = item.Value.Select(x => x.ToReadDto()).ToList(),
                         BoughtAssets = boughtAssetMap[item.Key].Select(x => x.ToReadDto()).ToList(),
                     });
@@ -52,7 +52,7 @@ namespace IisRest.Services.ReportService
                 {
                     report.Add(new ReportReadDto()
                     {
-                        Asset = item.Value[0].AssetPrice.Asset.ToReadDto(),
+                        Asset = item.Value[0].Asset.ToReadDto(),
                         SoldAsstes = item.Value.Select(x => x.ToReadDto()).ToList(),
                         BoughtAssets = new List<BoughtAssetReadDto>(),
                     });
@@ -75,13 +75,13 @@ namespace IisRest.Services.ReportService
 
             foreach (SoldAsset item in soldAssets)
             {
-                if (map.ContainsKey(item.AssetPrice.Asset.Name))
+                if (map.ContainsKey(item.Asset.Name))
                 {
-                    map[item.AssetPrice.Asset.Name].Add(item);
+                    map[item.Asset.Name].Add(item);
                 }
                 else
                 {
-                    map[item.AssetPrice.Asset.Name] = new List<SoldAsset>() { item };
+                    map[item.Asset.Name] = new List<SoldAsset>() { item };
                 }
             }
 
@@ -94,13 +94,13 @@ namespace IisRest.Services.ReportService
 
             foreach (BoughtAsset item in boughtAssets)
             {
-                if (map.ContainsKey(item.AssetPrice.Asset.Name))
+                if (map.ContainsKey(item.Asset.Name))
                 {
-                    map[item.AssetPrice.Asset.Name].Add(item);
+                    map[item.Asset.Name].Add(item);
                 }
                 else
                 {
-                    map[item.AssetPrice.Asset.Name] = new List<BoughtAsset>() { item };
+                    map[item.Asset.Name] = new List<BoughtAsset>() { item };
                 }
             }
 
@@ -115,7 +115,7 @@ namespace IisRest.Services.ReportService
                 {
                     report.Add(new ReportReadDto()
                     {
-                        Asset = item.Value[0].AssetPrice.Asset.ToReadDto(),
+                        Asset = item.Value[0].Asset.ToReadDto(),
                         SoldAsstes = new List<SoldAssetReadDto>(),
                         BoughtAssets = boughtAssetMap[item.Key].Select(x => x.ToReadDto()).ToList(),
                     });

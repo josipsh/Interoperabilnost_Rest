@@ -20,6 +20,5 @@ namespace IisRest.Contracts.Dtos.ReportDtos
 
         [DataMember(Order = 3)]
         public List<SoldAssetReadDto> SoldAsstes { get; set; } = default!;
-
     }
 }

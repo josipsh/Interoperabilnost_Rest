@@ -12,12 +12,20 @@ namespace IisRest.Data.Db.MsSql.Configuration
 
             builder.HasKey(p => p.Id);
 
-            builder.HasOne(x => x.AssetPrice)
-               .WithMany(x => x.BoughtAssets)
-               .HasForeignKey(x => x.AssetPriceId)
+            builder.HasOne(x => x.Price)
+               .WithMany()
+               .HasForeignKey(x => x.PriceId)
                .OnDelete(DeleteBehavior.NoAction);
 
-            builder.Property(p => p.AssetPriceId)
+            builder.HasOne(x => x.Asset)
+               .WithMany()
+               .HasForeignKey(x => x.AssetId)
+               .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Property(p => p.PriceId)
+                .IsRequired(true);
+
+            builder.Property(p => p.AssetId)
                 .IsRequired(true);
 
             builder.Property(p => p.ProfileId)

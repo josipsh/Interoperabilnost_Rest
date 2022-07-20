@@ -1,7 +1,6 @@
 using IisRest.Contracts.Entities;
 using IisRest.Contracts.Repositories;
 using IisRest.Data.Db.MsSql.Configuration;
-using Microsoft.EntityFrameworkCore;
 
 namespace IisRest.Data.Db.MsSql.Repositories
 {
@@ -17,14 +16,12 @@ namespace IisRest.Data.Db.MsSql.Repositories
         public override IEnumerable<Asset> GetAll()
         {
             return _context.Assets
-                .Include(x => x.AssetPrices)
                 .ToList();
         }
 
         public override Asset? GetById(int id)
         {
             return _context.Assets
-                .Include(x => x.AssetPrices)
                 .FirstOrDefault(x => x.Id == id);
         }
     }

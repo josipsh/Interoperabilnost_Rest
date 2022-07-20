@@ -6,12 +6,14 @@ namespace IisRest.Contracts.Entities
     {
         public int Id { get; set; }
         public int ProfileId { get; set; }
-        public int AssetPriceId { get; set; }
+        public int PriceId { get; set; }
+        public int AssetId { get; set; }
         public DateTime SellDate { get; set; }
         public double Amount { get; set; }
 
         public UserProfile Profile { get; set; } = default!;
-        public AssetPrice AssetPrice { get; set; } = default!;
+        public Price Price { get; set; } = default!;
+        public Asset Asset { get; set; } = default!;
 
         public SoldAssetReadDto ToReadDto()
         {
@@ -20,8 +22,8 @@ namespace IisRest.Contracts.Entities
                 Id = Id,
                 Amount = Amount,
                 SellDate = SellDate,
-                Asset = AssetPrice.Asset.ToReadDto(),
-                Price = AssetPrice.Price.ToReadDto(),
+                Asset = Asset.ToReadDto(),
+                Price = Price.ToReadDto(),
             };
         }
     }

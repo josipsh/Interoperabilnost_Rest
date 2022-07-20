@@ -18,24 +18,20 @@ namespace IisRest.Data.Db.MsSql.Repositories
         {
             return _context.SoldAssets
                 .Include(b => b.Profile)
-                .Include(b => b.AssetPrice)
-                .ThenInclude(p => p.Price)
+                .Include(p => p.Price)
                 .ThenInclude(c => c.Currency)
-                .Include(b => b.AssetPrice)
-                .ThenInclude(p => p.Asset)
+                .Include(p => p.Asset)
                 .ToList();
         }
 
         public override SoldAsset? GetById(int id)
         {
-
             return _context.SoldAssets
                 .Include(b => b.Profile)
-                .Include(b => b.AssetPrice)
-                .ThenInclude(p => p.Price)
+                .Include(p => p.Price)
                 .ThenInclude(c => c.Currency)
-                .Include(b => b.AssetPrice)
-                .ThenInclude(p => p.Asset).FirstOrDefault(x => x.Id == id);
+                .Include(p => p.Asset)
+                .FirstOrDefault(x => x.Id == id);
         }
     }
 }
