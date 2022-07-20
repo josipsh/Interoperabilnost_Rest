@@ -53,6 +53,7 @@ namespace IisRest.Services.SoldAssetService
             };
 
             _uow.PriceRepository.Create(price);
+            _uow.SaveChanges();
 
             SoldAsset soldAssetModel = soldAsset.ToModel();
             soldAssetModel.ProfileId = userId;

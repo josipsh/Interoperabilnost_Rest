@@ -17,9 +17,15 @@ namespace IisRest.Contracts.Dtos.SoldAsset
         public double Amount { get; set; }
 
         [DataMember(Order = 3)]
-        public PriceReadDto Price { get; set; } = default!;
+        public int PriceId { get; set; } = default!;
 
         [DataMember(Order = 4)]
+        public int AssetId { get; set; } = default!;
+
+        [DataMember(Order = 5)]
+        public PriceReadDto Price { get; set; } = default!;
+
+        [DataMember(Order = 6)]
         public AssetReadDto Asset { get; set; } = default!;
     }
 }

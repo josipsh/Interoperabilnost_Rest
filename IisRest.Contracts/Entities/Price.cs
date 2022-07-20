@@ -16,7 +16,7 @@ namespace IisRest.Contracts.Entities
             return new PriceReadDto()
             {
                 Id = Id,
-                Currency = Currency.ToReadDto(),
+                Currency = Currency?.ToReadDto() ?? default!,
                 PriceRate = PriceRate,
                 PriceDate = PriceDate,
             };

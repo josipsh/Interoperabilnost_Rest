@@ -22,8 +22,10 @@ namespace IisRest.Contracts.Entities
                 Id = Id,
                 Amount = Amount,
                 SellDate = SellDate,
-                Asset = Asset.ToReadDto(),
-                Price = Price.ToReadDto(),
+                AssetId = AssetId,
+                PriceId = PriceId,
+                Asset = Asset?.ToReadDto() ?? default!,
+                Price = Price?.ToReadDto() ?? default!,
             };
         }
     }
