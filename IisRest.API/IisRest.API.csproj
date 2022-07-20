@@ -21,4 +21,8 @@
     <ProjectReference Include="..\IisRest.Services\IisRest.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Validations\" />
+  </ItemGroup>
+
 </Project>
