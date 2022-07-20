@@ -27,6 +27,7 @@ namespace IisRest.API.Middlewares
 
         private async Task HandleException(HttpContext context, Exception ex)
         {
+            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
             string message = $"Message: {ex.Message}";
 
             var resultJson = JsonSerializer.Serialize(message);
